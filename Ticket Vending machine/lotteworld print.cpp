@@ -26,7 +26,7 @@ int main()
 	
 	do
 	{
-	FILE *fp = fopen("reprot.csv", "a+");
+
 	
 	int index = 0, sumPay = 0;
 	int ticketType[10] = {0,}, ticketNum[10] = {0,}, advantage[10] = {0,}, totalPay[10] = {0,}, citizenNum[10] = {0,}, year[10] = {0,}, numBack[10] = {0,}, calYear[10] = {0,}, norPay[10] = {0,};
@@ -35,6 +35,8 @@ int main()
 	
 	do
 	{ 
+	FILE *fp = fopen("reprot.csv", "a+");
+	
 	printf("%18s %d년 %d월 %d일 %02d:%02d:%02d\n\n", "현재시각 :",tm.tm_year+1900, tm.tm_mon+1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 	printf("v 놀이공원 티켓 발권 서비스에 오신 것을 환영합니다.\n\n");
 	printf("발권하실 권종을 선택하세요\n1.주간권\n2.야간권\n");
@@ -156,6 +158,11 @@ int main()
 	totalPay[index] = (ticketNum[index] * norPay[index]);
 	printf("총 티켓 가격은 %d 원 입니다.\n계속해서 발권을 진행하시겠습니까? 1.예/2.아니오\n", totalPay[index]);
 	scanf("%1d", &proceed);  //여기까지 index 값 = 0
+	
+	fprintf(fp, "%d년,%d월,%d일",nowYear, nowMonth, nowDays);
+	 // 받아야 하는 정보 : 날짜,  권종, 연령, 수량, 우대사항 
+	fclose(fp);
+
 	index++;	//이 아래부터 index 값 = 1
 	}
 	while(proceed<=1);
@@ -215,11 +222,6 @@ int main()
 
 		sumPay += totalPay[i];
 	}
-	
-	fprintf(fp, "%d년,%d월,%d일",nowYear, nowMonth, nowDays);
-	 // 받아야 하는 정보 : 날짜,  권종, 연령, 수량, 우대사항 
-	 
-	fclose(fp);
 	 
 	printf("총 결제 금액 : %d 원\n\n", sumPay);
 	printf("=====================================\n");
