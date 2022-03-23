@@ -4,7 +4,7 @@
 
 int main()
 {
-
+	
 	time_t t = time(NULL);
 	struct tm tm = *localtime(&t);
 	
@@ -26,9 +26,13 @@ int main()
 	
 	do
 	{
+	FILE *fp = fopen("reprot.csv", "a+");
+	
 	int index = 0, sumPay = 0;
 	int ticketType[10] = {0,}, ticketNum[10] = {0,}, advantage[10] = {0,}, totalPay[10] = {0,}, citizenNum[10] = {0,}, year[10] = {0,}, numBack[10] = {0,}, calYear[10] = {0,}, norPay[10] = {0,};
-	int month[10] = {0,}, day[10] = {0,}, gap[10] = {0,};		
+	int month[10] = {0,}, day[10] = {0,}, gap[10] = {0,};
+	int nowYear = (tm.tm_year+1900), nowMonth = (tm.tm_mon+1), nowDays = (tm.tm_mday);
+	
 	do
 	{ 
 	printf("%18s %d년 %d월 %d일 %02d:%02d:%02d\n\n", "현재시각 :",tm.tm_year+1900, tm.tm_mon+1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
@@ -207,14 +211,21 @@ int main()
 		printf("임산부 우대적용\n");}
 		else if(advantage[i]==6)
 		 {
-		printf("다둥이 행복카드 우대적용\n");}
+		printf("다둥이 행복카드 우대적용\n");} 
 
 		sumPay += totalPay[i];
 	}
+	
+	fprintf(fp, "%d년,%d월,%d일",nowYear, nowMonth, nowDays);
+	 // 받아야 하는 정보 : 날짜,  권종, 연령, 수량, 우대사항 
+	 
+	fclose(fp);
+	 
 	printf("총 결제 금액 : %d 원\n\n", sumPay);
 	printf("=====================================\n");
 	printf("\n- 새롭게 발권을 진행하시겠습니까? 1.예 / 2.아니오\n");
 	scanf("%1d", &reOrder);
+	
 	}while(reOrder<2);
 	return 0;
 }
