@@ -26,11 +26,14 @@ float division(float a, float b)
 	return division;	
 }
 
-int dual(int a)
+int dual(int a, int b)
 {
-	int dual;
-	dual = a*a;
-	return dual;	
+	int result = 1;
+	for(int index=0; index <b; index++)
+	{ result *= a;
+	}
+	
+	return result;	
 }
 
 
@@ -54,7 +57,7 @@ int main()
 	printf("%f\n", returnData4);
 	
 	int returnData5;
-	returnData5 = dual(15);
+	returnData5 = dual(15,0);
 	printf("%d\n", returnData5);
 
 	
