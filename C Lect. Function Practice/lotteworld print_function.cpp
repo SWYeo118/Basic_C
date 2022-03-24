@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <time.h>
 
+
+	 // 금액 첫번째 것이 두번 나옴. 토탈 금액이 새로 주문했을 때 초기화가 안되고 누적되어버림 
+
 	time_t t = time(NULL);
 	struct tm tm = *localtime(&t);
 	int index = 0;
@@ -186,7 +189,7 @@
 	for(int i = 0; i<index;i++) 
 	{
 
-		if ((ticketType[i]) == 1 )
+		if (ticketType[i] == 1 )
 		{
 			printf("주간권 ");
 		}
@@ -194,7 +197,8 @@
 		{
 			printf("야간권 ");
 		}
-		if ((calYear[i]<3)) 
+		
+		if (calYear[i]<3) 
 		{
 			printf("유아 ");
 		}
@@ -237,8 +241,8 @@
 		printf("다둥이 행복카드 우대적용\n");} 
 		
 		fprintf(fp, "%d,%d,%d,%d,%d,%d,%d,%d\n", tm.tm_year+1900, tm.tm_mon+1, tm.tm_mday, ticketType[i], calYear[i], ticketNum[i], advantage[i], totalPay[i]);
+	
 	}
-		fclose(fp);
 }
 	
 	void sumPayment(){
@@ -256,13 +260,17 @@
 	printf("\n- 새롭게 발권을 진행하시겠습니까? 1.예 / 2.아니오\n");
 	scanf("%1d", &reOrder);	
 	}
-	
+
 int main()
 {	
 	do
 	{
+
+		int ticketType[10] = {0,}, ticketNum[10] = {0,}, advantage[10] = {0,}, 
+			totalPay[10] = {0,}, citizenNum[10] = {0,}, year[10] = {0,}, numBack[10] = {0,}, 
+			calYear[10] = {0,}, norPay[10] = {0,}, month[10] = {0,}, day[10] = {0,}, gap[10] = {0,};
 	do
-	{ 
+	{
 	selectTicket();
 	identifyAge();
 	howManyTicket();
@@ -271,12 +279,14 @@ int main()
 
 	index++;
 	}while(proceed<=1);
-	
+
 	thankYou();
 	printReport();
 	sumPayment();
 	newOrder();
 	
+	FILE *fp = NULL;
+	fclose(fp);
 	}while(reOrder<2);
 	
 	return 0;
